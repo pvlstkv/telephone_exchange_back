@@ -5,11 +5,17 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "subscribers")
+@Table(name = "subscribers",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "login"),
+                @UniqueConstraint(columnNames = "name")
+        })
 public class Subscriber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +46,18 @@ public class Subscriber {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
+    public Subscriber() {
+    }
 
+    public Subscriber(String name, String login, String password) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+    }
 }
