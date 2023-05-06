@@ -60,4 +60,10 @@ public class Subscriber {
         this.login = login;
         this.password = password;
     }
+
+
+    public Subscriber(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 }
