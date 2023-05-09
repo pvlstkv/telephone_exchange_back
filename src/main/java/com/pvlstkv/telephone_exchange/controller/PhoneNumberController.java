@@ -3,13 +3,13 @@ package com.pvlstkv.telephone_exchange.controller;
 import com.pvlstkv.telephone_exchange.mapper.PhoneNumberMapper;
 import com.pvlstkv.telephone_exchange.model.dto.PhoneNumberDTO;
 import com.pvlstkv.telephone_exchange.service.PhoneNumberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/phone-numbers")
+@AllArgsConstructor
 public class PhoneNumberController {
-    @Autowired
     private PhoneNumberService phoneNumberService;
 
     private PhoneNumberMapper numberMapper;
@@ -28,7 +28,7 @@ public class PhoneNumberController {
 
     @PutMapping("/{id}")
     public PhoneNumberDTO updatePhoneNumber(@PathVariable Long id, @RequestBody PhoneNumberDTO dto) {
-        return numberMapper.toDto(phoneNumberService.updatePhoneNumber(id, dto));
+        return numberMapper.toDto(phoneNumberService.updatePhoneNumber(id, numberMapper.toEntity(dto)));
     }
 
     @DeleteMapping("/{id}")

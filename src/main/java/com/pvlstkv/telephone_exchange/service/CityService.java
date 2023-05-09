@@ -19,8 +19,6 @@ public class CityService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "City not found with id = " + id));
     }
 
-
-
     public City createCity(City city) {
         return cityRepository.save(city);
     }

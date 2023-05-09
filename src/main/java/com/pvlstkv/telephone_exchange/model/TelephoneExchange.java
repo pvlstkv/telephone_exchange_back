@@ -23,7 +23,7 @@ public class TelephoneExchange {
     )
     private District district;
 
-    @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL)
     private List<Subscriber> subscribers = new ArrayList<>();
 
     @Column(nullable = false)

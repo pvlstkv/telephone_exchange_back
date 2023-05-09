@@ -21,6 +21,6 @@ public class District {
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-    @OneToMany(mappedBy = "district", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "district", cascade = CascadeType.ALL)
     private List<TelephoneExchange> exchanges = new ArrayList<>();
 }

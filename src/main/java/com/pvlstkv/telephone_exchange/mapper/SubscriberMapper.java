@@ -1,20 +1,25 @@
 package com.pvlstkv.telephone_exchange.mapper;
 
+import com.pvlstkv.telephone_exchange.model.PhoneNumber;
 import com.pvlstkv.telephone_exchange.model.Subscriber;
 import com.pvlstkv.telephone_exchange.model.dto.SubscriberDTO;
+import com.pvlstkv.telephone_exchange.repository.PhoneNumberRepository;
 import com.pvlstkv.telephone_exchange.repository.SubscriberRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SubscriberMapper {
 
     private SubscriberRepository subscriberRepository;
 
+    private PhoneNumberRepository numberRepository;
+
     private PhoneNumberMapper phoneNumberMapper;
+
     public SubscriberDTO toDTO(Subscriber subscriber) {
         SubscriberDTO dto = new SubscriberDTO();
         dto.setId(subscriber.getId());
@@ -23,8 +28,9 @@ public class SubscriberMapper {
         dto.setAddress(subscriber.getAddress());
         dto.setInstallationDate(subscriber.getInstallationDate());
         dto.setLogin(subscriber.getLogin());
+        dto.setRoles(subscriber.getRoles());
 //        dto.setPassword(subscriber.getPassword());
-        dto.setPhoneNumbers(phoneNumberMapper.toDtoList(subscriber.getPhoneNumbers()));
+        dto.setPhoneNumberIds(subscriber.getPhoneNumbers().stream().map(PhoneNumber::getId).toList());
         return dto;
     }
 
@@ -36,8 +42,9 @@ public class SubscriberMapper {
         subscriber.setAddress(dto.getAddress());
         subscriber.setInstallationDate(dto.getInstallationDate());
         subscriber.setLogin(dto.getLogin());
+        subscriber.setRoles(dto.getRoles());
 //        subscriber.setPassword(dto.getPassword());
-        subscriber.setPhoneNumbers(phoneNumberMapper.toEntityList(dto.getPhoneNumbers()));
+        subscriber.setPhoneNumbers(numberRepository.findAllById(dto.getPhoneNumberIds()));
         return subscriber;
     }
 

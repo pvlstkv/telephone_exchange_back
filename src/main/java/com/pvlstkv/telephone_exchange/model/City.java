@@ -18,7 +18,7 @@ public class City {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     @JsonView()
     private List<District> districts = new ArrayList<>();
 }

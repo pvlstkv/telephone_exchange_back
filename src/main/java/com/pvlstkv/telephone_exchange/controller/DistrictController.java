@@ -6,12 +6,12 @@ import com.pvlstkv.telephone_exchange.model.dto.DistrictDTO;
 import com.pvlstkv.telephone_exchange.service.CityService;
 import com.pvlstkv.telephone_exchange.service.DistrictService;
 import com.pvlstkv.telephone_exchange.service.TelephoneExchangeService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/districts")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class DistrictController {
 
     private DistrictService districtService;
@@ -25,24 +25,25 @@ public class DistrictController {
 
     @PostMapping
     public DistrictDTO createDistrict(@RequestBody DistrictDTO dto) {
-        District district = districtMapper.toEntity(dto, cityService.getCity(dto.getCityId()), exchangeService.findAllById(dto.getExchangeIds()));
-        return districtMapper.toDTO(districtService.save(district));
+        District district = districtMapper.toEntity(dto, cityService.getCity(dto.getCityId()),
+                exchangeService.getAllTelephoneExchange(dto.getExchangeIds()));
+        return districtMapper.toDTO(districtService.createDistrict(district));
     }
 
     @GetMapping("/{id}")
     public DistrictDTO getDistrict(@PathVariable Long id) {
-        return districtMapper.toDTO(districtService.findById(id));
+        return districtMapper.toDTO(districtService.getDistrict(id));
     }
 
     @PutMapping("/{id}")
     public DistrictDTO updateDistrict(@PathVariable Long id, @RequestBody DistrictDTO dto) {
-        District district = districtMapper.toEntity(dto, cityService.getCity(dto.getCityId()), exchangeService.findAllById(dto.getExchangeIds()));
-        district.setId(id);
-        return districtMapper.toDTO(districtService.save(district));
+        District district = districtMapper.toEntity(dto, cityService.getCity(dto.getCityId()),
+                exchangeService.getAllTelephoneExchange(dto.getExchangeIds()));
+        return districtMapper.toDTO(districtService.updateDistrict(id, district));
     }
 
     @DeleteMapping("/{id}")
     public void deleteDistrict(@PathVariable Long id) {
-        districtService.deleteById(id);
+        districtService.deleteDistrict(id);
     }
 }

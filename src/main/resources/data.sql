@@ -13,6 +13,13 @@
     insert into telephone_exchanges(first_two_digits, number)
     values ('64', '6455555');
 
+    insert into phone_numbers(phone, exchange_id, subscriber_id) values('89012321', 1, 1);
+    insert into phone_numbers(phone, exchange_id, subscriber_id) values('8437589345874839',1,  1);
+    insert into phone_numbers(phone, exchange_id,  subscriber_id) values('4782940543', 1,  2);
+    insert into phone_numbers(phone, exchange_id,  subscriber_id) values('12345678910', 1,  2);
+    insert into phone_numbers(phone, exchange_id,  subscriber_id) values('890765234123413', 2,  2);
+    insert into phone_numbers(phone, exchange_id,  subscriber_id) values('23667775645645', 3,  2);
+
 
     insert into cities(name)
     values ('Ульяновск');
@@ -43,5 +50,6 @@
     values ('Центральный', (select id from cities where name = 'Казань'));
 
 
+    insert into subscribers(login, password, roles) values ('qwe', '$2a$10$v34jyZyknnQywXsBlW2ozef5f35759MZTDQb/F8mk0PDiK91IdwCG', ('{0}'));
+    insert into subscribers(login, password, roles) values ('QWE', '$2a$10$v34jyZyknnQywXsBlW2ozef5f35759MZTDQb/F8mk0PDiK91IdwCG', ('{0}'));
 
-    insert into subscribers(login, password, roles) values ('QWE', '$2a$10$v34jyZyknnQywXsBlW2ozef5f35759MZTDQb/F8mk0PDiK91IdwCG', ('{0}'))

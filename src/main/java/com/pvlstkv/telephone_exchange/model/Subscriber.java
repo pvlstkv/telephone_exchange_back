@@ -40,7 +40,7 @@ public class Subscriber {
     )
     private TelephoneExchange exchange;
 
-    @OneToMany(mappedBy = "subscriber", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "subscriber", cascade = CascadeType.ALL)
     private List<PhoneNumber> phoneNumbers = new ArrayList<>();
 
     @Column(nullable = false)

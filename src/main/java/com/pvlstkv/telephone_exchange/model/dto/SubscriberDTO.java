@@ -1,10 +1,12 @@
 package com.pvlstkv.telephone_exchange.model.dto;
 
+import com.pvlstkv.telephone_exchange.authorization.ERole;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @RequiredArgsConstructor
@@ -23,9 +25,9 @@ public class SubscriberDTO {
 
     private String password;
 
-    private Long phoneNumberId;
+    private List<Long> phoneNumberIds;
 
-    private List<PhoneNumberDTO> phoneNumbers;
+    private Set<ERole> roles;
 
 
     // getters and setters

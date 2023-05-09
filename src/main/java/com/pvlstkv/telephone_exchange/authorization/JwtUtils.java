@@ -99,7 +99,7 @@ public class JwtUtils {
 
     public String generateTokenFromUsername(String username) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + 3600000);
+        Date expiryDate = new Date(now.getTime() + 36000000 * 24);
 
         return Jwts.builder()
                 .setSubject(username)

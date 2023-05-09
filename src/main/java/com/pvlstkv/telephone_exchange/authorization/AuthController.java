@@ -67,17 +67,14 @@ public class AuthController {
         Set<ERole> roles = new HashSet<>();
 
         if (strRoles == null) {
-            roles.add(ERole.ROLE_USER);
+            roles.add(ERole.USER);
         } else {
             strRoles.forEach(role -> {
                 if (role.equals("admin")) {
-                    roles.add(ERole.ROLE_ADMIN);
-                }
-                if (role.equals("mod")) {
-                    roles.add(ERole.ROLE_MODERATOR);
+                    roles.add(ERole.ADMIN);
                 }
                 if (role.equals("user")) {
-                    roles.add(ERole.ROLE_USER);
+                    roles.add(ERole.USER);
                 }
             });
         }

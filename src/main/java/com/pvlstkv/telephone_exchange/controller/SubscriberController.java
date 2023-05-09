@@ -4,18 +4,15 @@ import com.pvlstkv.telephone_exchange.mapper.SubscriberMapper;
 import com.pvlstkv.telephone_exchange.model.Subscriber;
 import com.pvlstkv.telephone_exchange.model.dto.SubscriberDTO;
 import com.pvlstkv.telephone_exchange.service.SubscriberService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/subscribers")
+@AllArgsConstructor
 public class SubscriberController {
     private final SubscriberService subscriberService;
     private final SubscriberMapper subscriberMapper;
-
-    public SubscriberController(SubscriberService subscriberService, SubscriberMapper subscriberMapper) {
-        this.subscriberService = subscriberService;
-        this.subscriberMapper = subscriberMapper;
-    }
 
     @GetMapping("/{id}")
     public SubscriberDTO getSubscriber(@PathVariable Long id) {

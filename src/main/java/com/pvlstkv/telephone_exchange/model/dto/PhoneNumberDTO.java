@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PhoneNumberDTO {
     private Long id;
+    //    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "");
     private String phone;
     private Long subscriberId;
 

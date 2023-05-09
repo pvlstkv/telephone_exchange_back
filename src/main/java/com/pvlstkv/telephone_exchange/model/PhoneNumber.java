@@ -20,7 +20,14 @@ public class PhoneNumber {
     @JoinColumn(name = "exchange_id", nullable = false)
     private TelephoneExchange exchange;
 
-    public void setPhone(String phone) {
-        this.phone = this.exchange.getFirstTwoDigits() + phone;
+
+    public void addPrefix() {
+        this.phone = this.exchange.getFirstTwoDigits() + this.phone;
     }
+//    public void setPhone(String phone) {
+//        this.phone = this.exchange.getFirstTwoDigits() + phone;
+//    }
+//    public String getPhone(){
+//        return this.phone.substring(2);
+//    }
 }
