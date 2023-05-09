@@ -26,9 +26,6 @@ public class JwtUtils {
 
     public String getJwtFromHeader(HttpServletRequest request) {
         final String authHeader = request.getHeader("Authorization");
-//        if (authHeader ==  null || !authHeader.startsWith("Bearer ")){
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO token");
-//        }
         return authHeader != null ? authHeader.substring(7) : "";
     }
 

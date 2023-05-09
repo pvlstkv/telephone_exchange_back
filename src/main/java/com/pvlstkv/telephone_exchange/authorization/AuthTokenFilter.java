@@ -7,11 +7,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
@@ -35,14 +37,11 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             }
             String jwt = authHeader.substring(7);
             if (!jwtUtils.checkValidityJwt(jwt)) {
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Токен не валиде");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Токен не валиден");
             }
             String login = jwtUtils.extractUsername(jwt);
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(login);
             if (jwtUtils.validateJwtToken(jwt, userDetails)) {
-
-//                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails,
                                 null,
@@ -60,8 +59,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     private String parseJwt(HttpServletRequest request) {
-        String jwt = jwtUtils.getJwtFromHeader(request);
-        return jwt;
+        return jwtUtils.getJwtFromHeader(request);
     }
 
 }

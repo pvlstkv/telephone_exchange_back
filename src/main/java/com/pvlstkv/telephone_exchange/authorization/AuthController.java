@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -50,7 +51,8 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (subscriberRepository.existsByName(signUpRequest.getLogin())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "имя пользователя " + signUpRequest.getLogin() + " уже занято");
         }
 
 //        if (subscriberRepository.existsByEmail(signUpRequest.getEmail())) {
