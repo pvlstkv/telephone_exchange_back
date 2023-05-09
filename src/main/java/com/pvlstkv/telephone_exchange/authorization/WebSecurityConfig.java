@@ -62,16 +62,24 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests().requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/test/**").permitAll()
-                .requestMatchers("/h2-console/**", "/error").permitAll()
-                .requestMatchers("/swagger-ui.html").permitAll()
-                .requestMatchers("/api/v2/api-docs/**").permitAll()
-//                .requestMatchers("/api/auth/signup").permitAll()
-                .anyRequest().authenticated();
+        http
+                .cors().and().csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/**",
+                        "/swagger-ui.html/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/v2/api-docs/**",
+                        "/api/auth/**",
+                        "/api/test/**", "/h2-console/**", "/error")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
         // fix H2 database console: Refused to display ' in a frame because it set 'X-Frame-Options' to 'deny'
         http.headers().frameOptions().sameOrigin();
