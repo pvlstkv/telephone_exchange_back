@@ -23,8 +23,8 @@ public class SubscriberService {
         return subscriberRepository.save(subscriber);
     }
 
-    public Subscriber updateSubscriber(Subscriber subscriber) {
-        Subscriber entity = subscriberRepository.findById(subscriber.getId()).orElseThrow(
+    public Subscriber updateSubscriber(Long id, Subscriber subscriber) {
+        Subscriber entity = subscriberRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "не найден подписчик с id = " + subscriber.getId())
         );
         entity.setPhoneNumbers(subscriber.getPhoneNumbers());
@@ -34,7 +34,11 @@ public class SubscriberService {
         entity.setExchange(subscriber.getExchange());
         entity.setType(subscriber.getType());
         entity.setInstallationDate(subscriber.getInstallationDate());
-        entity.setPassword(subscriber.getPassword());
+        if (subscriber.getPassword() != null) {
+            entity.setPassword(subscriber.getPassword());
+        }else {
+            entity.setPassword(entity.getPassword());
+        }
         entity.setRoles(subscriber.getRoles());
         return subscriberRepository.save(entity);
     }

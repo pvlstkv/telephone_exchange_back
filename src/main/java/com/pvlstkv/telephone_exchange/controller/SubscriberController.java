@@ -30,7 +30,7 @@ public class SubscriberController {
 
     @PutMapping("/{id}")
     public SubscriberDTO updateSubscriber(@PathVariable Long id, @RequestBody SubscriberDTO dto) {
-        return subscriberMapper.toDTO(subscriberService.updateSubscriber(
+        return subscriberMapper.toDTO(subscriberService.updateSubscriber(id,
                 subscriberMapper.toEntity(dto)
         ));
     }

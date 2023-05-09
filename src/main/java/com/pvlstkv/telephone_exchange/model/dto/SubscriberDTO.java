@@ -23,6 +23,7 @@ public class SubscriberDTO {
 
     private String login;
 
+    private boolean encodePassword = false;
     private String password;
 
     private List<Long> phoneNumberIds;

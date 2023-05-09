@@ -6,6 +6,7 @@ import com.pvlstkv.telephone_exchange.model.dto.SubscriberDTO;
 import com.pvlstkv.telephone_exchange.repository.PhoneNumberRepository;
 import com.pvlstkv.telephone_exchange.repository.SubscriberRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class SubscriberMapper {
 
     private PhoneNumberRepository numberRepository;
 
-    private PhoneNumberMapper phoneNumberMapper;
+    private PasswordEncoder encoder;
+
 
     public SubscriberDTO toDTO(Subscriber subscriber) {
         SubscriberDTO dto = new SubscriberDTO();
@@ -43,6 +45,9 @@ public class SubscriberMapper {
         subscriber.setInstallationDate(dto.getInstallationDate());
         subscriber.setLogin(dto.getLogin());
         subscriber.setRoles(dto.getRoles());
+        if (dto.isEncodePassword()) {
+            subscriber.setPassword(encoder.encode(dto.getPassword()));
+        }
 //        subscriber.setPassword(dto.getPassword());
         subscriber.setPhoneNumbers(numberRepository.findAllById(dto.getPhoneNumberIds()));
         return subscriber;
