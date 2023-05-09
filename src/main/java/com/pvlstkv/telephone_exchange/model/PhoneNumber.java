@@ -15,4 +15,12 @@ public class PhoneNumber {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscriber_id", nullable = false)
     private Subscriber subscriber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exchange_id", nullable = false)
+    private TelephoneExchange exchange;
+
+    public void setPhone(String phone) {
+        this.phone = this.exchange.getFirstTwoDigits() + phone;
+    }
 }

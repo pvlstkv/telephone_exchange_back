@@ -18,7 +18,9 @@ public class TelephoneExchange {
     private String number;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "district_id", nullable = false)
+    @JoinColumn(name = "district_id"
+//            , nullable = false
+    )
     private District district;
 
     @OneToMany(mappedBy = "exchange", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -28,4 +30,8 @@ public class TelephoneExchange {
     private String firstTwoDigits;
 
 
+    public void setNumber(String number) {
+        this.number = number;
+        this.firstTwoDigits = number.substring(0, 2);
+    }
 }

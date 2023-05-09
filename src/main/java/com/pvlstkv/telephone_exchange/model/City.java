@@ -1,5 +1,6 @@
 package com.pvlstkv.telephone_exchange.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class City {
     private String name;
 
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonView()
     private List<District> districts = new ArrayList<>();
 }
 

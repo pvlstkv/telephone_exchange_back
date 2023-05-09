@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
+//@RepositoryRestResource(collectionResourceRel = "subscribers", path = "subscriber")
+
 public interface SubscriberRepository extends JpaRepository<Subscriber, Long> {
 
     Optional<Subscriber> findByName(String name);
@@ -12,5 +14,7 @@ public interface SubscriberRepository extends JpaRepository<Subscriber, Long> {
     Optional<Subscriber> findByLogin(String login);
 
     Boolean existsByName(String name);
+
+
 
 }
