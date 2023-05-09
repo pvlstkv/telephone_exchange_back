@@ -13,13 +13,13 @@ public class Controller {
 
 
     @GetMapping("/hello")
-    @Secured("ROLE_USER")
+    @Secured("USER")
     public String hello(HttpServletRequest request){
         return "hello " + request.getUserPrincipal().getName();
     }
 
     @GetMapping("/exception")
-    @Secured("ROLE_USER")
+    @Secured("USER")
     public String exception(){
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "exception text");
 //        return "exception";

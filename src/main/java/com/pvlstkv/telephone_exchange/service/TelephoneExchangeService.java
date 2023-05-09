@@ -32,8 +32,8 @@ public class TelephoneExchangeService {
         return repository.save(exchange);
     }
 
-    public TelephoneExchange updateTelephoneExchange(TelephoneExchange exchange) {
-        TelephoneExchange entity = repository.findById(exchange.getId())
+    public TelephoneExchange updateTelephoneExchange(Long id, TelephoneExchange exchange) {
+        TelephoneExchange entity = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("не найден райно с id = " + exchange.getId()));
         entity.setNumber(exchange.getNumber());
         entity.setDistrict(districtRepository.findById(exchange.getDistrict().getId()).orElseThrow(

@@ -1,17 +1,17 @@
     insert into telephone_exchanges(first_two_digits, number)
-    values ('12', '1234567');
+    values ('12', '1234567', 1);
 
     insert into telephone_exchanges(first_two_digits, number)
-    values ('89', '890765');
+    values ('89', '890765', 2);
 
     insert into telephone_exchanges(first_two_digits, number)
-    values ('23', '2366777');
+    values ('23', '2366777', 2);
 
     insert into telephone_exchanges(first_two_digits, number)
-    values ('45', '4532111');
+    values ('45', '4532111', 3);
 
     insert into telephone_exchanges(first_two_digits, number)
-    values ('64', '6455555');
+    values ('64', '6455555', 4);
 
     insert into phone_numbers(phone, exchange_id, subscriber_id) values('89012321', 1, 1);
     insert into phone_numbers(phone, exchange_id, subscriber_id) values('8437589345874839',1,  1);

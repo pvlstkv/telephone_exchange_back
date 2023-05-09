@@ -3,9 +3,10 @@ package com.pvlstkv.telephone_exchange.mapper;
 import com.pvlstkv.telephone_exchange.model.TelephoneExchange;
 import com.pvlstkv.telephone_exchange.model.dto.TelephoneExchangeDTO;
 import com.pvlstkv.telephone_exchange.repository.DistrictRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 @Component
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class TelephoneExchangeMapper {
         dto.setId(entity.getId());
         dto.setNumber(entity.getNumber());
         dto.setDistrictId(entity.getDistrict().getId());
-        dto.setSubscribers(subscriberMapper.toDtoList(entity.getSubscribers()));
+        dto.setSubscriberIds(subscriberMapper.toDtoList(entity.getSubscribers()));
         dto.setFirstTwoDigits(entity.getFirstTwoDigits());
         return dto;
     }
@@ -29,11 +30,12 @@ public class TelephoneExchangeMapper {
         TelephoneExchange entity = new TelephoneExchange();
         entity.setId(dto.getId());
         entity.setNumber(dto.getNumber());
-        entity.setDistrict(districtRepository.findById(dto.getId()).orElseThrow(
-                () -> new EntityNotFoundException("District with id = " + dto.getId())
+        entity.setDistrict(districtRepository.findById(dto.getDistrictId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "не найден район с id = " + dto.getId())
                 )
         );
-        entity.setSubscribers(subscriberMapper.toEntityList(dto.getSubscribers()));
+        entity.setFirstTwoDigits(dto.getFirstTwoDigits());
+        entity.setSubscribers(subscriberMapper.toEntityList(dto.getSubscriberIds()));
         return entity;
     }
 }

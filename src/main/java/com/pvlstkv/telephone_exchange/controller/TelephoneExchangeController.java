@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/telephone-exchanges")
 @AllArgsConstructor
-
 public class TelephoneExchangeController {
     private TelephoneExchangeService service;
 
@@ -27,7 +26,7 @@ public class TelephoneExchangeController {
 
     @PutMapping("/{id}")
     public TelephoneExchangeDTO update(@PathVariable Long id, @RequestBody TelephoneExchangeDTO dto) {
-        return exchangeMapper.toDto(service.updateTelephoneExchange(exchangeMapper.toEntity(dto)));
+        return exchangeMapper.toDto(service.updateTelephoneExchange(id, exchangeMapper.toEntity(dto)));
     }
 
     @DeleteMapping("/{id}")

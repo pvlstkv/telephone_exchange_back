@@ -11,7 +11,7 @@ public class TelephoneExchangeDTO {
     private Long id;
     private String number;
     private Long districtId;
-    private List<Long> subscribers;
+    private List<Long> subscriberIds;
     private String firstTwoDigits;
 
     // getters and setters
