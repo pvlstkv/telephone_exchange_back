@@ -1,4 +1,4 @@
-package com.pvlstkv.telephone_exchange;
+package com.pvlstkv.telephone_exchange.authorization;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,11 +28,20 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-            String jwt = parseJwt(request);
-            if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-                String username = jwtUtils.getUserNameFromJwtToken(jwt);
+            String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+            String jwt = authHeader.substring(7);
+            if (!jwtUtils.checkValidityJwt(jwt)) {
+//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Токен не валиде");
+            }
+            String login = jwtUtils.extractUsername(jwt);
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(login);
+            if (jwtUtils.validateJwtToken(jwt, userDetails)) {
 
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+//                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails,
@@ -51,7 +60,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     private String parseJwt(HttpServletRequest request) {
-        String jwt = jwtUtils.getJwtFromCookies(request);
+        String jwt = jwtUtils.getJwtFromHeader(request);
         return jwt;
     }
 

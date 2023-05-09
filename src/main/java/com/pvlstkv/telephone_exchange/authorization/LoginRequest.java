@@ -1,4 +1,4 @@
-package com.pvlstkv.telephone_exchange;
+package com.pvlstkv.telephone_exchange.authorization;
 
 public class LoginRequest {
 

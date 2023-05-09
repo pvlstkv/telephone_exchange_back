@@ -1,4 +1,4 @@
-package com.pvlstkv.telephone_exchange;
+package com.pvlstkv.telephone_exchange.authorization;
 
 import com.pvlstkv.telephone_exchange.model.Subscriber;
 import com.pvlstkv.telephone_exchange.repository.SubscriberRepository;

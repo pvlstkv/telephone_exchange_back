@@ -1,4 +1,4 @@
-package com.pvlstkv.telephone_exchange;
+package com.pvlstkv.telephone_exchange.authorization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

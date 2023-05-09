@@ -1,5 +1,6 @@
 package com.pvlstkv.telephone_exchange.model;
 
+import com.pvlstkv.telephone_exchange.authorization.ERole;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -21,20 +22,22 @@ public class Subscriber {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String type;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private LocalDate installationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exchange_id", nullable = false)
+    @JoinColumn(name = "exchange_id"
+//            , nullable = false
+    )
     private TelephoneExchange exchange;
 
     @OneToMany(mappedBy = "subscriber", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -46,11 +49,7 @@ public class Subscriber {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<ERole> roles = new HashSet<>();
 
     public Subscriber() {
     }
@@ -66,4 +65,5 @@ public class Subscriber {
         this.login = login;
         this.password = password;
     }
+
 }

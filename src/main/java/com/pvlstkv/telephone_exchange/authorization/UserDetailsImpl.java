@@ -1,4 +1,4 @@
-package com.pvlstkv.telephone_exchange;
+package com.pvlstkv.telephone_exchange.authorization;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pvlstkv.telephone_exchange.model.Subscriber;
@@ -36,7 +36,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl build(Subscriber subscriber) {
         List<GrantedAuthority> authorities = subscriber.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
 
         return new UserDetailsImpl(
