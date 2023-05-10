@@ -53,7 +53,7 @@ public class SubscriberMapper {
         return subscriber;
     }
 
-    public List<Long> toDtoList(List<Subscriber> subscribers) {
+    public List<Long> toDTOList(List<Subscriber> subscribers) {
         return subscribers.stream().map(Subscriber::getId).toList();
     }
 

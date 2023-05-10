@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @Service
@@ -19,6 +21,10 @@ public class CityService {
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "City not found with id = " + id));
     }
 
+
+    public List<City> getAllCities(){
+        return cityRepository.findAll();
+    }
     public City createCity(City city) {
         return cityRepository.save(city);
     }

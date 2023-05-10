@@ -8,6 +8,8 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class PhoneNumberService {
@@ -36,5 +38,9 @@ public class PhoneNumberService {
 
     public void deletePhoneNumber(Long id) {
         phoneNumberRepository.deleteById(id);
+    }
+
+    public List<PhoneNumber> getAllPhoneNumbers() {
+        return phoneNumberRepository.findAll();
     }
 }

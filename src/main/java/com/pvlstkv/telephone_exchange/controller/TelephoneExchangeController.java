@@ -6,6 +6,8 @@ import com.pvlstkv.telephone_exchange.service.TelephoneExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/telephone-exchanges")
 @AllArgsConstructor
@@ -15,22 +17,25 @@ public class TelephoneExchangeController {
     private TelephoneExchangeMapper exchangeMapper;
 
     @GetMapping("/{id}")
-    public TelephoneExchangeDTO getById(@PathVariable Long id) {
-        return exchangeMapper.toDto(service.getTelephoneExchange(id));
+    public TelephoneExchangeDTO getTelephoneExchange(@PathVariable Long id) {
+        return exchangeMapper.toDTO(service.getTelephoneExchange(id));
     }
 
-    @PostMapping
-    public TelephoneExchangeDTO create(@RequestBody TelephoneExchangeDTO dto) {
-        return exchangeMapper.toDto(service.createTelephoneExchange(exchangeMapper.toEntity(dto)));
+    public List<TelephoneExchangeDTO> getAllTelephoneExchanges()
+    {
+        return exchangeMapper.toDTOList(service.getAllTelephoneExchanges());
+    }    @PostMapping
+    public TelephoneExchangeDTO createTelephoneExchange(@RequestBody TelephoneExchangeDTO dto) {
+        return exchangeMapper.toDTO(service.createTelephoneExchange(exchangeMapper.toEntity(dto)));
     }
 
     @PutMapping("/{id}")
-    public TelephoneExchangeDTO update(@PathVariable Long id, @RequestBody TelephoneExchangeDTO dto) {
-        return exchangeMapper.toDto(service.updateTelephoneExchange(id, exchangeMapper.toEntity(dto)));
+    public TelephoneExchangeDTO updateTelephoneExchange(@PathVariable Long id, @RequestBody TelephoneExchangeDTO dto) {
+        return exchangeMapper.toDTO(service.updateTelephoneExchange(id, exchangeMapper.toEntity(dto)));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteTelephoneExchange(@PathVariable Long id) {
         service.deleteTelephoneExchange(id);
     }
 }

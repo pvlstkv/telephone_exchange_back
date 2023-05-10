@@ -17,9 +17,13 @@ public class SubscriberController {
     @GetMapping("/{id}")
     public SubscriberDTO getSubscriber(@PathVariable Long id) {
         Subscriber subscriber = subscriberService.getSubscriber(id);
-        SubscriberDTO dto = subscriberMapper.toDTO(subscriber);
-        return dto;
+        return subscriberMapper.toDTO(subscriber);
     }
+
+//    @GetMapping
+//    public List<SubscriberDTO> getAllSubscribers(){
+//        return subscriberMapper.toDTOList(subscriberService.getAllSubscribers());
+//    }
 
     @PostMapping
     public SubscriberDTO createSubscriber(@RequestBody SubscriberDTO dto) {

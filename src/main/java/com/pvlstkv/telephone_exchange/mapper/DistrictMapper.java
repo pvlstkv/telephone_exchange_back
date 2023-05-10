@@ -28,4 +28,8 @@ public class DistrictMapper {
         district.setExchanges(exchanges);
         return district;
     }
+
+    public List<DistrictDTO> toDTOList(List<District> allDistricts) {
+        return allDistricts.stream().map(this::toDTO).toList();
+    }
 }

@@ -9,6 +9,8 @@ import com.pvlstkv.telephone_exchange.service.TelephoneExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/districts")
 @AllArgsConstructor
@@ -26,7 +28,7 @@ public class DistrictController {
     @PostMapping
     public DistrictDTO createDistrict(@RequestBody DistrictDTO dto) {
         District district = districtMapper.toEntity(dto, cityService.getCity(dto.getCityId()),
-                exchangeService.getAllTelephoneExchange(dto.getExchangeIds()));
+                exchangeService.getAllTelephoneExchangeByIds(dto.getExchangeIds()));
         return districtMapper.toDTO(districtService.createDistrict(district));
     }
 
@@ -35,10 +37,15 @@ public class DistrictController {
         return districtMapper.toDTO(districtService.getDistrict(id));
     }
 
+    @GetMapping
+    public List<DistrictDTO> getAllDistricts(){
+        return districtMapper.toDTOList(districtService.getAllDistricts());
+    }
+
     @PutMapping("/{id}")
     public DistrictDTO updateDistrict(@PathVariable Long id, @RequestBody DistrictDTO dto) {
         District district = districtMapper.toEntity(dto, cityService.getCity(dto.getCityId()),
-                exchangeService.getAllTelephoneExchange(dto.getExchangeIds()));
+                exchangeService.getAllTelephoneExchangeByIds(dto.getExchangeIds()));
         return districtMapper.toDTO(districtService.updateDistrict(id, district));
     }
 

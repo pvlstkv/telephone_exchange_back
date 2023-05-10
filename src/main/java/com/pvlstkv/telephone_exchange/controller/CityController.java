@@ -7,6 +7,8 @@ import com.pvlstkv.telephone_exchange.service.CityService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cities")
 @AllArgsConstructor
@@ -19,6 +21,11 @@ public class CityController {
     public CityDTO getCity(@PathVariable Long id) {
         City city = cityService.getCity(id);
         return cityMapper.toDTO(city);
+    }
+
+    @GetMapping
+    public List<CityDTO> getCities() {
+        return cityMapper.toDTOList(cityService.getAllCities());
     }
 
     @PostMapping

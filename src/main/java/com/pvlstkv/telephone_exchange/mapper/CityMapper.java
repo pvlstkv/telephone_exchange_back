@@ -39,4 +39,9 @@ public class CityMapper {
         city.setDistricts(districts);
         return city;
     }
+
+
+    public List<CityDTO> toDTOList(List<City> allCities) {
+        return allCities.stream().map(this::toDTO).toList();
+    }
 }

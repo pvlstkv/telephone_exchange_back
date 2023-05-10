@@ -15,7 +15,7 @@ public class PhoneNumberMapper {
     private SubscriberService subscriberService;
     private TelephoneExchangeService exchangeService;
 
-    public PhoneNumberDTO toDto(PhoneNumber entity) {
+    public PhoneNumberDTO toDTO(PhoneNumber entity) {
         PhoneNumberDTO dto = new PhoneNumberDTO();
         dto.setId(entity.getId());
         dto.setPhone(entity.getPhone());
@@ -34,8 +34,8 @@ public class PhoneNumberMapper {
         return entity;
     }
 
-    public List<PhoneNumberDTO> toDtoList(List<PhoneNumber> phoneNumbers) {
-        return phoneNumbers.stream().map(this::toDto).toList();
+    public List<PhoneNumberDTO> toDTOList(List<PhoneNumber> phoneNumbers) {
+        return phoneNumbers.stream().map(this::toDTO).toList();
     }
 
     public List<PhoneNumber> toEntityList(List<PhoneNumberDTO> phoneNumbers) {

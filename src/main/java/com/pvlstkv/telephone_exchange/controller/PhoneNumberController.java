@@ -6,6 +6,8 @@ import com.pvlstkv.telephone_exchange.service.PhoneNumberService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/phone-numbers")
 @AllArgsConstructor
@@ -16,19 +18,22 @@ public class PhoneNumberController {
 
     @GetMapping("/{id}")
     public PhoneNumberDTO getPhoneNumber(@PathVariable Long id) {
-        return numberMapper.toDto(phoneNumberService.getPhoneNumber(id));
+        return numberMapper.toDTO(phoneNumberService.getPhoneNumber(id));
     }
-
+@GetMapping
+public List<PhoneNumberDTO> getAllPhoneNumber(){
+        return numberMapper.toDTOList(phoneNumberService.getAllPhoneNumbers());
+}
     @PostMapping
     public PhoneNumberDTO createPhoneNumber(@RequestBody PhoneNumberDTO dto) {
-        return numberMapper.toDto(phoneNumberService.createPhoneNumber(
+        return numberMapper.toDTO(phoneNumberService.createPhoneNumber(
                 numberMapper.toEntity(dto)
         ));
     }
 
     @PutMapping("/{id}")
     public PhoneNumberDTO updatePhoneNumber(@PathVariable Long id, @RequestBody PhoneNumberDTO dto) {
-        return numberMapper.toDto(phoneNumberService.updatePhoneNumber(id, numberMapper.toEntity(dto)));
+        return numberMapper.toDTO(phoneNumberService.updatePhoneNumber(id, numberMapper.toEntity(dto)));
     }
 
     @DeleteMapping("/{id}")

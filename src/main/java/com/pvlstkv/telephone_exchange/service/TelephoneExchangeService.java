@@ -49,7 +49,15 @@ public class TelephoneExchangeService {
         repository.deleteById(id);
     }
 
-    public List<TelephoneExchange> getAllTelephoneExchange(List<Long> exchangeIds) {
+    public List<TelephoneExchange> getAllTelephoneExchangeByIds(List<Long> exchangeIds) {
         return repository.findAllById(exchangeIds);
     }
+
+    public List<TelephoneExchange> getAllTelephoneExchanges() {
+        return repository.findAll();
+    }
+
+//    public List<TelephoneExchange> getAllTelephoneExchanges() {
+//        return repository.findAll();
+//    }
 }
