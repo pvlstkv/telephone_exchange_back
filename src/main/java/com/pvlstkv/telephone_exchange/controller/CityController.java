@@ -17,10 +17,10 @@ public class CityController {
 
     private CityMapper cityMapper;
 
-    @GetMapping("/{id}")
-    public CityDTO getCity(@PathVariable Long id) {
-        City city = cityService.getCity(id);
-        return cityMapper.toDTO(city);
+    @GetMapping("/{ids}")
+    public List<CityDTO> getCity(@PathVariable List<Long> ids) {
+        List<City> cities = cityService.getCities(ids);
+        return cityMapper.toDTOList(cities);
     }
 
     @GetMapping

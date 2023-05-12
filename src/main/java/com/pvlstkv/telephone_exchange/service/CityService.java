@@ -16,11 +16,14 @@ public class CityService {
 
     private CityRepository cityRepository;
 
-    public City getCity(Long id) {
+    public List<City> getCities(List<Long> ids) {
+        return cityRepository.findAllById(ids);
+    }
+
+    public City getCity(Long id){
         return cityRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "City not found with id = " + id));
     }
-
 
     public List<City> getAllCities(){
         return cityRepository.findAll();

@@ -2,7 +2,6 @@ package com.pvlstkv.telephone_exchange.service;
 
 import com.pvlstkv.telephone_exchange.model.District;
 import com.pvlstkv.telephone_exchange.repository.DistrictRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,9 +29,8 @@ public class DistrictService {
         return districtRepository.save(entity);
     }
 
-    public District getDistrict(Long id) {
-        return districtRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("District not found"));
+    public List<District> getDistrict(List<Long> ids) {
+        return districtRepository.findAllById(ids);
     }
 
     public void deleteDistrict(Long id) {

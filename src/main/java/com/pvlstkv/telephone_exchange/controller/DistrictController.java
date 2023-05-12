@@ -32,9 +32,9 @@ public class DistrictController {
         return districtMapper.toDTO(districtService.createDistrict(district));
     }
 
-    @GetMapping("/{id}")
-    public DistrictDTO getDistrict(@PathVariable Long id) {
-        return districtMapper.toDTO(districtService.getDistrict(id));
+    @GetMapping("/{ids}")
+    public List<DistrictDTO> getDistrict(@PathVariable List<Long> ids) {
+        return districtMapper.toDTOList(districtService.getDistrict(ids));
     }
 
     @GetMapping
