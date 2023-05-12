@@ -32,6 +32,7 @@ public class SubscriberService {
         entity.setPhoneNumbers(subscriber.getPhoneNumbers());
         entity.setAddress(subscriber.getAddress());
         entity.setName(subscriber.getName());
+
         entity.setLogin(subscriber.getLogin());
         entity.setExchange(subscriber.getExchange());
         entity.setType(subscriber.getType());

@@ -17,8 +17,8 @@ public class PhoneNumberService {
 
     private SubscriberRepository subscriberRepository;
 
-    public PhoneNumber getPhoneNumber(Long id) {
-        return phoneNumberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("PhoneNumber not found"));
+    public List<PhoneNumber> getPhoneNumber(List<Long> ids) {
+        return phoneNumberRepository.findAllById(ids);
     }
 
     public PhoneNumber createPhoneNumber(PhoneNumber phoneNumber) {

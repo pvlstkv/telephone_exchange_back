@@ -4,11 +4,7 @@ import com.pvlstkv.telephone_exchange.authorization.ERole;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -23,7 +19,7 @@ public class Subscriber {
     private Long id;
 
 //    @Column(nullable = false)
-    private String type;
+    private ESubscriberType type;
 
 //    @Column(nullable = false)
     private String name;
@@ -32,7 +28,7 @@ public class Subscriber {
     private String address;
 
 //    @Column(nullable = false)
-    private LocalDate installationDate;
+    private Date installationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exchange_id"

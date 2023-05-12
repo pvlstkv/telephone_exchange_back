@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -30,7 +33,7 @@ public class JwtUtils {
     }
 
     public String generateJwt(UserDetailsImpl userPrincipal) {
-        String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+        String jwt = generateToken(userPrincipal);
         return jwt;
     }
 //
@@ -97,12 +100,20 @@ public class JwtUtils {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public String generateTokenFromUsername(String username) {
+    public String generateToken(UserDetailsImpl userDetails) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + 36000000 * 24);
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", userDetails.getId());
+        data.put("role", userDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.joining(", ")));
+        data.put("sub", userDetails.getUsername());
 
         return Jwts.builder()
-                .setSubject(username)
+//                .setSubject(userDetails.getUsername())
+//                .setId(userDetails.getId().toString())
+////                .setId(userDetails.getId().toString())
+//                .setAudience(userDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.joining(", ")))
+                .setClaims(data)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)

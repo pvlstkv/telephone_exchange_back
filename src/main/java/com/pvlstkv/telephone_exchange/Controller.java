@@ -13,14 +13,14 @@ public class Controller {
 
 
     @GetMapping("/hello")
-    @Secured("USER")
-    public String hello(HttpServletRequest request){
-        return "hello " + request.getUserPrincipal().getName();
+    public String hello(HttpServletRequest request) {
+        return "hello " +
+                (request.getUserPrincipal() != null ? request.getUserPrincipal().getName() : "");
     }
 
     @GetMapping("/exception")
     @Secured("USER")
-    public String exception(){
+    public String exception() {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "exception text");
 //        return "exception";
     }

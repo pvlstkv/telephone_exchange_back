@@ -1,5 +1,6 @@
 package com.pvlstkv.telephone_exchange.mapper;
 
+import com.pvlstkv.telephone_exchange.model.ESubscriberType;
 import com.pvlstkv.telephone_exchange.model.PhoneNumber;
 import com.pvlstkv.telephone_exchange.model.Subscriber;
 import com.pvlstkv.telephone_exchange.model.dto.SubscriberDTO;
@@ -9,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
@@ -25,10 +28,10 @@ public class SubscriberMapper {
     public SubscriberDTO toDTO(Subscriber subscriber) {
         SubscriberDTO dto = new SubscriberDTO();
         dto.setId(subscriber.getId());
-        dto.setType(subscriber.getType());
+        dto.setType(subscriber.getType().toString());
         dto.setName(subscriber.getName());
         dto.setAddress(subscriber.getAddress());
-        dto.setInstallationDate(subscriber.getInstallationDate());
+        dto.setInstallationDate(subscriber.getInstallationDate().toString());
         dto.setLogin(subscriber.getLogin());
         dto.setRoles(subscriber.getRoles());
 //        dto.setPassword(subscriber.getPassword());
@@ -36,13 +39,13 @@ public class SubscriberMapper {
         return dto;
     }
 
-    public Subscriber toEntity(SubscriberDTO dto) {
+    public Subscriber toEntity(SubscriberDTO dto) throws ParseException {
         Subscriber subscriber = new Subscriber();
         subscriber.setId(dto.getId());
-        subscriber.setType(dto.getType());
+        subscriber.setType(ESubscriberType.valueOf(dto.getType()));
         subscriber.setName(dto.getName());
         subscriber.setAddress(dto.getAddress());
-        subscriber.setInstallationDate(dto.getInstallationDate());
+        subscriber.setInstallationDate(new SimpleDateFormat("yyyy-MM-dd").parse(dto.getInstallationDate()));
         subscriber.setLogin(dto.getLogin());
         subscriber.setRoles(dto.getRoles());
         if (dto.isEncodePassword()) {

@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.HashSet;
 import java.util.Set;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {

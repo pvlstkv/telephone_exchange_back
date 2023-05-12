@@ -7,6 +7,8 @@ import com.pvlstkv.telephone_exchange.service.SubscriberService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/subscribers")
 @AllArgsConstructor
@@ -26,14 +28,14 @@ public class SubscriberController {
 //    }
 
     @PostMapping
-    public SubscriberDTO createSubscriber(@RequestBody SubscriberDTO dto) {
+    public SubscriberDTO createSubscriber(@RequestBody SubscriberDTO dto) throws ParseException {
         return subscriberMapper.toDTO(subscriberService.createSubscriber(
                 subscriberMapper.toEntity(dto)
         ));
     }
 
     @PutMapping("/{id}")
-    public SubscriberDTO updateSubscriber(@PathVariable Long id, @RequestBody SubscriberDTO dto) {
+    public SubscriberDTO updateSubscriber(@PathVariable Long id, @RequestBody SubscriberDTO dto) throws ParseException {
         return subscriberMapper.toDTO(subscriberService.updateSubscriber(id,
                 subscriberMapper.toEntity(dto)
         ));

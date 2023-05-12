@@ -16,9 +16,9 @@ public class PhoneNumberController {
 
     private PhoneNumberMapper numberMapper;
 
-    @GetMapping("/{id}")
-    public PhoneNumberDTO getPhoneNumber(@PathVariable Long id) {
-        return numberMapper.toDTO(phoneNumberService.getPhoneNumber(id));
+    @GetMapping("/{ids}")
+    public List<PhoneNumberDTO> getPhoneNumber(@PathVariable List<Long> ids) {
+        return numberMapper.toDTOList(phoneNumberService.getPhoneNumber(ids));
     }
 @GetMapping
 public List<PhoneNumberDTO> getAllPhoneNumber(){

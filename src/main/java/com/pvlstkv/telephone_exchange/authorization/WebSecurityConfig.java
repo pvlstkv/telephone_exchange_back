@@ -66,6 +66,7 @@ public class WebSecurityConfig {
                 .cors().and().csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**",
+                        "/hello",
                         "/swagger-ui.html/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",

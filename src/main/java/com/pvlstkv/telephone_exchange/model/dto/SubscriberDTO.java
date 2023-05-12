@@ -4,7 +4,6 @@ import com.pvlstkv.telephone_exchange.authorization.ERole;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +18,7 @@ public class SubscriberDTO {
 
     private String address;
 
-    private LocalDate installationDate;
+    private String installationDate;
 
     private String login;
 
