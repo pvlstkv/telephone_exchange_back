@@ -3,6 +3,7 @@ package com.pvlstkv.telephone_exchange.controller;
 import com.pvlstkv.telephone_exchange.mapper.DistrictMapper;
 import com.pvlstkv.telephone_exchange.model.District;
 import com.pvlstkv.telephone_exchange.model.dto.DistrictDTO;
+import com.pvlstkv.telephone_exchange.model.dto.DistrictExtendedDTO;
 import com.pvlstkv.telephone_exchange.service.CityService;
 import com.pvlstkv.telephone_exchange.service.DistrictService;
 import com.pvlstkv.telephone_exchange.service.TelephoneExchangeService;
@@ -35,6 +36,17 @@ public class DistrictController {
     @GetMapping("/{ids}")
     public List<DistrictDTO> getDistrict(@PathVariable List<Long> ids) {
         return districtMapper.toDTOList(districtService.getDistrict(ids));
+    }
+
+    @GetMapping("/extended/{ids}")
+    public List<DistrictExtendedDTO> getExtendedDistricts(@PathVariable List<Long> ids){
+        List<District> districts = districtService.getDistrict(ids);
+        return districtMapper.toExtendedDTOList(districts);
+    }
+
+    @GetMapping("/all-extended")
+    public List<DistrictExtendedDTO> getAllExtendedDistricts(){
+        return districtMapper.toExtendedDTOList(districtService.getAllDistricts());
     }
 
     @GetMapping

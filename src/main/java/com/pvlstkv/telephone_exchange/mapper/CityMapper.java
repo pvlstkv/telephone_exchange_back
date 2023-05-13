@@ -3,6 +3,7 @@ package com.pvlstkv.telephone_exchange.mapper;
 import com.pvlstkv.telephone_exchange.model.City;
 import com.pvlstkv.telephone_exchange.model.District;
 import com.pvlstkv.telephone_exchange.model.dto.CityDTO;
+import com.pvlstkv.telephone_exchange.model.dto.CityExtendedDTO;
 import com.pvlstkv.telephone_exchange.repository.DistrictRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class CityMapper {
 
     private final DistrictRepository districtRepository;
+    private final DistrictMapper districtMapper;
 
     public CityDTO toDTO(City city) {
         CityDTO dto = new CityDTO();
@@ -43,5 +45,17 @@ public class CityMapper {
 
     public List<CityDTO> toDTOList(List<City> allCities) {
         return allCities.stream().map(this::toDTO).toList();
+    }
+
+    public List<CityExtendedDTO> toExtendedDTOList(List<City> allCities) {
+        return allCities.stream().map(this::toExtendedDTO).toList();
+    }
+
+    private CityExtendedDTO toExtendedDTO(City city) {
+        CityExtendedDTO dto = new CityExtendedDTO();
+        dto.setId(city.getId());
+        dto.setName(city.getName());
+        dto.setDistricts(districtMapper.toDTOList(city.getDistricts()));
+        return dto;
     }
 }

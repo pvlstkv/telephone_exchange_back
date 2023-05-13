@@ -3,6 +3,7 @@ package com.pvlstkv.telephone_exchange.controller;
 import com.pvlstkv.telephone_exchange.mapper.CityMapper;
 import com.pvlstkv.telephone_exchange.model.City;
 import com.pvlstkv.telephone_exchange.model.dto.CityDTO;
+import com.pvlstkv.telephone_exchange.model.dto.CityExtendedDTO;
 import com.pvlstkv.telephone_exchange.service.CityService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,20 @@ public class CityController {
         return cityMapper.toDTOList(cities);
     }
 
+    @GetMapping("extended/{ids}")
+    public List<CityExtendedDTO> getExtendedCities(@PathVariable List<Long> ids) {
+        List<City> cities = cityService.getCities(ids);
+        return cityMapper.toExtendedDTOList(cities);
+    }
+
     @GetMapping
     public List<CityDTO> getCities() {
         return cityMapper.toDTOList(cityService.getAllCities());
+    }
+
+    @GetMapping("/all-extended")
+    public List<CityExtendedDTO> getAllExtendedCities() {
+        return cityMapper.toExtendedDTOList(cityService.getAllCities());
     }
 
     @PostMapping
