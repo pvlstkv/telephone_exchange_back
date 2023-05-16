@@ -9,25 +9,16 @@ import java.util.Set;
 
 @Data
 @RequiredArgsConstructor
-public class SubscriberDTO {
+public class SubscriberExtendedDTO {
+
     private Long id;
-
     private String type;
-
     private String name;
-
     private String address;
-
     private String installationDate;
-
     private String login;
-
     private boolean encodePassword = false;
     private String password;
-
-    private List<Long> phoneNumberIds;
-
+    private List<PhoneNumberDTO> phoneNumbers;
     private Set<ERole> roles;
-
-
 }

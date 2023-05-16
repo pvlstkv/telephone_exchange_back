@@ -3,11 +3,14 @@ package com.pvlstkv.telephone_exchange.controller;
 import com.pvlstkv.telephone_exchange.mapper.SubscriberMapper;
 import com.pvlstkv.telephone_exchange.model.Subscriber;
 import com.pvlstkv.telephone_exchange.model.dto.SubscriberDTO;
+import com.pvlstkv.telephone_exchange.model.dto.SubscriberExtendedDTO;
+import com.pvlstkv.telephone_exchange.model.dto.TelephoneExchangeExtendedDTO;
 import com.pvlstkv.telephone_exchange.service.SubscriberService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/subscribers")
@@ -22,10 +25,14 @@ public class SubscriberController {
         return subscriberMapper.toDTO(subscriber);
     }
 
-//    @GetMapping
-//    public List<SubscriberDTO> getAllSubscribers(){
-//        return subscriberMapper.toDTOList(subscriberService.getAllSubscribers());
-//    }
+    @GetMapping("/all-extended")
+    public List<SubscriberExtendedDTO> getAllExtendedTelephoneExchanges(){
+        return subscriberMapper.toExtendedDTOList(subscriberService.getAllSubscribers());
+    }
+    @GetMapping
+    public List<SubscriberDTO> getAllSubscribers(){
+        return subscriberMapper.toDTOList(subscriberService.getAllSubscribers());
+    }
 
     @PostMapping
     public SubscriberDTO createSubscriber(@RequestBody SubscriberDTO dto) throws ParseException {

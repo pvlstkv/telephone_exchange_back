@@ -10,6 +10,7 @@ import com.pvlstkv.telephone_exchange.service.TelephoneExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -33,8 +34,13 @@ public class DistrictController {
         return districtMapper.toDTO(districtService.createDistrict(district));
     }
 
+    @GetMapping("/{id}")
+    public DistrictDTO getDistrict(@PathVariable Long id){
+        return districtMapper.toDTO(districtService
+                .getDistrict(Collections.singletonList(id)).get(0));
+    }
     @GetMapping("/{ids}")
-    public List<DistrictDTO> getDistrict(@PathVariable List<Long> ids) {
+    public List<DistrictDTO> getDistricts(@PathVariable List<Long> ids) {
         return districtMapper.toDTOList(districtService.getDistrict(ids));
     }
 

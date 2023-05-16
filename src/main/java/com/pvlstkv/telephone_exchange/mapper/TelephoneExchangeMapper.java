@@ -1,7 +1,9 @@
 package com.pvlstkv.telephone_exchange.mapper;
 
 import com.pvlstkv.telephone_exchange.model.TelephoneExchange;
+import com.pvlstkv.telephone_exchange.model.dto.DistrictDTO;
 import com.pvlstkv.telephone_exchange.model.dto.TelephoneExchangeDTO;
+import com.pvlstkv.telephone_exchange.model.dto.TelephoneExchangeExtendedDTO;
 import com.pvlstkv.telephone_exchange.repository.DistrictRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +20,14 @@ public class TelephoneExchangeMapper {
 
     private DistrictRepository districtRepository;
 
+//    private DistrictMapper districtMapper;
+
     public TelephoneExchangeDTO toDTO(TelephoneExchange entity) {
         TelephoneExchangeDTO dto = new TelephoneExchangeDTO();
         dto.setId(entity.getId());
         dto.setNumber(entity.getNumber());
         dto.setDistrictId(entity.getDistrict().getId());
-        dto.setSubscriberIds(subscriberMapper.toDTOList(entity.getSubscribers()));
+        dto.setSubscriberIds(subscriberMapper.toDTOListIds(entity.getSubscribers()));
         dto.setFirstTwoDigits(entity.getFirstTwoDigits());
         return dto;
     }
@@ -43,5 +47,23 @@ public class TelephoneExchangeMapper {
 
     public List<TelephoneExchangeDTO> toDTOList(List<TelephoneExchange> allTelephoneExchanges) {
         return allTelephoneExchanges.stream().map(this::toDTO).toList();
+    }
+
+    public List<TelephoneExchangeExtendedDTO> toExtendedDTOList(List<TelephoneExchange> allTelephoneExchanges) {
+        return allTelephoneExchanges.stream().map(this::toExtendedDTO).toList();
+    }
+
+    private TelephoneExchangeExtendedDTO toExtendedDTO(TelephoneExchange exchange) {
+        TelephoneExchangeExtendedDTO dto = new TelephoneExchangeExtendedDTO();
+        dto.setNumber(exchange.getNumber());
+        dto.setFirstTwoDigits(exchange.getFirstTwoDigits());
+        DistrictDTO districtDTO = new DistrictDTO();
+        districtDTO.setId(exchange.getDistrict().getId());
+        districtDTO.setName(exchange.getDistrict().getName());
+        districtDTO.setCityId(exchange.getDistrict().getCity().getId());
+        districtDTO.setExchangeIds(exchange.getDistrict().getExchanges().stream().map(TelephoneExchange::getId).toList());
+        dto.setDistrict(districtDTO);
+        dto.setSubscribers(subscriberMapper.toDTOList(exchange.getSubscribers()));
+        return dto;
     }
 }

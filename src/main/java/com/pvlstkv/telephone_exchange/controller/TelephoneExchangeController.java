@@ -2,6 +2,7 @@ package com.pvlstkv.telephone_exchange.controller;
 
 import com.pvlstkv.telephone_exchange.mapper.TelephoneExchangeMapper;
 import com.pvlstkv.telephone_exchange.model.dto.TelephoneExchangeDTO;
+import com.pvlstkv.telephone_exchange.model.dto.TelephoneExchangeExtendedDTO;
 import com.pvlstkv.telephone_exchange.service.TelephoneExchangeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,11 @@ public class TelephoneExchangeController {
     public TelephoneExchangeDTO getTelephoneExchange(@PathVariable Long id) {
         return exchangeMapper.toDTO(service.getTelephoneExchange(id));
     }
-
+    @GetMapping("/all-extended")
+    public List<TelephoneExchangeExtendedDTO> getAllExtendedTelephoneExchanges(){
+        return exchangeMapper.toExtendedDTOList(service.getAllTelephoneExchanges());
+    }
+    @GetMapping
     public List<TelephoneExchangeDTO> getAllTelephoneExchanges()
     {
         return exchangeMapper.toDTOList(service.getAllTelephoneExchanges());

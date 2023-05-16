@@ -4,6 +4,7 @@ import com.pvlstkv.telephone_exchange.model.ESubscriberType;
 import com.pvlstkv.telephone_exchange.model.PhoneNumber;
 import com.pvlstkv.telephone_exchange.model.Subscriber;
 import com.pvlstkv.telephone_exchange.model.dto.SubscriberDTO;
+import com.pvlstkv.telephone_exchange.model.dto.SubscriberExtendedDTO;
 import com.pvlstkv.telephone_exchange.repository.PhoneNumberRepository;
 import com.pvlstkv.telephone_exchange.repository.SubscriberRepository;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class SubscriberMapper {
     private SubscriberRepository subscriberRepository;
 
     private PhoneNumberRepository numberRepository;
-
+    private PhoneNumberMapper phoneNumberMapper;
     private PasswordEncoder encoder;
 
 
@@ -56,11 +57,32 @@ public class SubscriberMapper {
         return subscriber;
     }
 
-    public List<Long> toDTOList(List<Subscriber> subscribers) {
+    public List<Long> toDTOListIds(List<Subscriber> subscribers) {
         return subscribers.stream().map(Subscriber::getId).toList();
     }
 
     public List<Subscriber> toEntityList(List<Long> subscriberIds) {
         return subscriberRepository.findAllById(subscriberIds);
+    }
+
+    public List<SubscriberDTO> toDTOList(List<Subscriber> subscribers) {
+        return subscribers.stream().map(this::toDTO).toList();
+    }
+
+    public List<SubscriberExtendedDTO> toExtendedDTOList(List<Subscriber> allSubscribers) {
+        return allSubscribers.stream().map(this::toExtendedDTO).toList();
+    }
+
+    private SubscriberExtendedDTO toExtendedDTO(Subscriber subscriber) {
+        SubscriberExtendedDTO dto = new SubscriberExtendedDTO();
+        dto.setId(subscriber.getId());
+        dto.setType(subscriber.getType().toString());
+        dto.setName(subscriber.getName());
+        dto.setAddress(subscriber.getAddress());
+        dto.setInstallationDate(subscriber.getInstallationDate().toString());
+        dto.setLogin(subscriber.getLogin());
+        dto.setRoles(subscriber.getRoles());
+        dto.setPhoneNumbers(subscriber.getPhoneNumbers().stream().map(it->phoneNumberMapper.toDTO(it)).toList());
+        return dto;
     }
 }
