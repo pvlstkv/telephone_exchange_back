@@ -1,24 +1,30 @@
 package com.pvlstkv.telephone_exchange.mapper;
 
 import com.pvlstkv.telephone_exchange.model.PhoneNumber;
-import com.pvlstkv.telephone_exchange.model.Subscriber;
-import com.pvlstkv.telephone_exchange.model.TelephoneExchange;
 import com.pvlstkv.telephone_exchange.model.dto.PhoneNumberDTO;
 import com.pvlstkv.telephone_exchange.model.dto.PhoneNumberExtendedDTO;
-import com.pvlstkv.telephone_exchange.model.dto.SubscriberDTO;
-import com.pvlstkv.telephone_exchange.model.dto.TelephoneExchangeDTO;
 import com.pvlstkv.telephone_exchange.service.SubscriberService;
 import com.pvlstkv.telephone_exchange.service.TelephoneExchangeService;
-import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@AllArgsConstructor
 public class PhoneNumberMapper {
     private SubscriberService subscriberService;
     private TelephoneExchangeService exchangeService;
+    private TelephoneExchangeMapper exchangeMapper;
+    private SubscriberMapper subscriberMapper;
+
+    public PhoneNumberMapper(SubscriberService subscriberService, TelephoneExchangeService exchangeService,
+                             @Lazy TelephoneExchangeMapper exchangeMapper,
+                             @Lazy SubscriberMapper subscriberMapper) {
+        this.subscriberService = subscriberService;
+        this.exchangeService = exchangeService;
+        this.exchangeMapper = exchangeMapper;
+        this.subscriberMapper = subscriberMapper;
+    }
 
     public PhoneNumberDTO toDTO(PhoneNumber entity) {
         PhoneNumberDTO dto = new PhoneNumberDTO();
@@ -55,25 +61,8 @@ public class PhoneNumberMapper {
         PhoneNumberExtendedDTO dto = new PhoneNumberExtendedDTO();
         dto.setId(entity.getId());
         dto.setPhone(entity.getPhone());
-        SubscriberDTO subscriberDTO = new SubscriberDTO();
-        Subscriber subscriber = entity.getSubscriber();
-        subscriberDTO.setId(subscriber.getId());
-        subscriberDTO.setType(subscriber.getType().toString());
-        subscriberDTO.setName(subscriber.getName());
-        subscriberDTO.setAddress(subscriber.getAddress());
-        subscriberDTO.setInstallationDate(subscriber.getInstallationDate().toString());
-        subscriberDTO.setLogin(subscriber.getLogin());
-        subscriberDTO.setRoles(subscriber.getRoles());
-//        dto.setPassword(subscriber.getPassword());
-        subscriberDTO.setPhoneNumberIds(subscriber.getPhoneNumbers().stream().map(PhoneNumber::getId).toList());
-        TelephoneExchangeDTO exchangeDTO = new TelephoneExchangeDTO();
-        TelephoneExchange exchange = entity.getExchange();
-        exchangeDTO.setNumber(exchange.getNumber());
-        exchangeDTO.setId(exchange.getId());
-        exchangeDTO.setDistrictId(exchange.getDistrict().getId());
-        exchangeDTO.setFirstTwoDigits(exchange.getFirstTwoDigits());
-        exchangeDTO.setSubscriberIds(exchange.getSubscribers().stream().map(Subscriber::getId).toList());
-        dto.setExchange(exchangeDTO);
+        dto.setSubscriber(subscriberMapper.toDTO(entity.getSubscriber()));
+        dto.setExchange(exchangeMapper.toDTO(entity.getExchange()));
         return dto;
     }
 }
