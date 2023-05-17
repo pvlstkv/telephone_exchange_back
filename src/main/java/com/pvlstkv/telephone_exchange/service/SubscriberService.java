@@ -1,6 +1,8 @@
 package com.pvlstkv.telephone_exchange.service;
 
+import com.pvlstkv.telephone_exchange.model.PhoneNumber;
 import com.pvlstkv.telephone_exchange.model.Subscriber;
+import com.pvlstkv.telephone_exchange.repository.PhoneNumberRepository;
 import com.pvlstkv.telephone_exchange.repository.SubscriberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 public class SubscriberService {
     private final SubscriberRepository subscriberRepository;
 
+    private final PhoneNumberRepository phoneNumberRepository;
 
     public Subscriber getSubscriber(Long id) {
         return subscriberRepository.findById(id)
@@ -29,6 +32,11 @@ public class SubscriberService {
         Subscriber entity = subscriberRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "не найден подписчик с id = " + subscriber.getId())
         );
+        List<PhoneNumber> oldPhones  = phoneNumberRepository.findAllBySubscriber(entity);
+        oldPhones.forEach(it->it.setSubscriber(null));
+        phoneNumberRepository.saveAll(oldPhones);
+
+        subscriber.getPhoneNumbers().forEach(it->it.setSubscriber(subscriber));
         entity.setPhoneNumbers(subscriber.getPhoneNumbers());
         entity.setAddress(subscriber.getAddress());
         entity.setName(subscriber.getName());

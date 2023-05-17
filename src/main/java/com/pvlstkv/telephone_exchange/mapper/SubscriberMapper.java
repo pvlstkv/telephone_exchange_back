@@ -32,7 +32,7 @@ public class SubscriberMapper {
         dto.setType(subscriber.getType().toString());
         dto.setName(subscriber.getName());
         dto.setAddress(subscriber.getAddress());
-        dto.setInstallationDate(subscriber.getInstallationDate().toString());
+        dto.setInstallationDate(subscriber.getInstallationDate() == null ? null : subscriber.getInstallationDate().toString());
         dto.setLogin(subscriber.getLogin());
         dto.setRoles(subscriber.getRoles());
 //        dto.setPassword(subscriber.getPassword());
@@ -46,7 +46,11 @@ public class SubscriberMapper {
         subscriber.setType(ESubscriberType.valueOf(dto.getType()));
         subscriber.setName(dto.getName());
         subscriber.setAddress(dto.getAddress());
-        subscriber.setInstallationDate(new SimpleDateFormat("yyyy-MM-dd").parse(dto.getInstallationDate()));
+        try {
+            subscriber.setInstallationDate(new SimpleDateFormat("yyyy-MM-dd").parse(dto.getInstallationDate()));
+        } catch (Exception e) {
+            subscriber.setInstallationDate(null);
+        }
         subscriber.setLogin(dto.getLogin());
         subscriber.setRoles(dto.getRoles());
         if (dto.isEncodePassword()) {
@@ -54,6 +58,7 @@ public class SubscriberMapper {
         }
 //        subscriber.setPassword(dto.getPassword());
         subscriber.setPhoneNumbers(numberRepository.findAllById(dto.getPhoneNumberIds()));
+        subscriber.getPhoneNumbers().forEach(item->item.setSubscriber(subscriber));
         return subscriber;
     }
 
@@ -79,10 +84,10 @@ public class SubscriberMapper {
         dto.setType(subscriber.getType().toString());
         dto.setName(subscriber.getName());
         dto.setAddress(subscriber.getAddress());
-        dto.setInstallationDate(subscriber.getInstallationDate().toString());
+        dto.setInstallationDate(subscriber.getInstallationDate() == null? null : subscriber.getInstallationDate().toString());
         dto.setLogin(subscriber.getLogin());
         dto.setRoles(subscriber.getRoles());
-        dto.setPhoneNumbers(subscriber.getPhoneNumbers().stream().map(it->phoneNumberMapper.toDTO(it)).toList());
+        dto.setPhoneNumbers(subscriber.getPhoneNumbers().stream().map(it -> phoneNumberMapper.toDTO(it)).toList());
         return dto;
     }
 }

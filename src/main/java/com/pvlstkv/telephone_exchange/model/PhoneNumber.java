@@ -13,11 +13,15 @@ public class PhoneNumber {
     private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subscriber_id", nullable = false)
+    @JoinColumn(name = "subscriber_id"
+//            , nullable = false
+    )
     private Subscriber subscriber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exchange_id", nullable = false)
+    @JoinColumn(name = "exchange_id"
+//            , nullable = false
+    )
     private TelephoneExchange exchange;
 
 

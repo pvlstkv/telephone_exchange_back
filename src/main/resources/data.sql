@@ -61,3 +61,10 @@ insert into phone_numbers(phone, exchange_id,  subscriber_id) values('4782940543
 insert into phone_numbers(phone, exchange_id,  subscriber_id) values('12345678910', 1,  2);
 insert into phone_numbers(phone, exchange_id,  subscriber_id) values('890765234123413', 2,  2);
 insert into phone_numbers(phone, exchange_id,  subscriber_id) values('23667775645645', 3,  2);
+
+
+insert into phone_numbers(phone, exchange_id) values('23232323232323', 3);
+insert into phone_numbers(phone, exchange_id) values('23333333333333', 3);
+insert into phone_numbers(phone, exchange_id) values('23000000000000', 3);
+
+
