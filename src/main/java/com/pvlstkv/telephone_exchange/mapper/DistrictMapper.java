@@ -22,7 +22,9 @@ public class DistrictMapper {
         dto.setId(district.getId());
         dto.setName(district.getName());
         dto.setCityId(district.getCity().getId());
-        dto.setExchangeIds(district.getExchanges().stream().map(TelephoneExchange::getId).collect(Collectors.toList()));
+        dto.setExchangeIds(district.getExchanges() == null ?
+                null
+                :district.getExchanges().stream().map(TelephoneExchange::getId).collect(Collectors.toList()));
         return dto;
     }
 

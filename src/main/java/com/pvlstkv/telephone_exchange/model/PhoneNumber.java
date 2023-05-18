@@ -2,10 +2,12 @@ package com.pvlstkv.telephone_exchange.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "phone_numbers")
+@ToString(exclude = {"subscriber", "exchange"})
 public class PhoneNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

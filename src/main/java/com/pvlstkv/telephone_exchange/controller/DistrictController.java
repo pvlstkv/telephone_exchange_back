@@ -30,7 +30,10 @@ public class DistrictController {
     @PostMapping
     public DistrictDTO createDistrict(@RequestBody DistrictDTO dto) {
         District district = districtMapper.toEntity(dto, cityService.getCity(dto.getCityId()),
-                exchangeService.getAllTelephoneExchangeByIds(dto.getExchangeIds()));
+                dto.getExchangeIds() == null ?
+                        null
+                        :exchangeService.getAllTelephoneExchangeByIds(dto.getExchangeIds())
+        );
         return districtMapper.toDTO(districtService.createDistrict(district));
     }
 

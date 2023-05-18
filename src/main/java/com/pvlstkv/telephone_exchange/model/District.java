@@ -18,7 +18,7 @@ public class District {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "city_id", nullable = false)
+    @JoinColumn(name = "city_id")
     private City city;
 
     @OneToMany(mappedBy = "district", cascade = CascadeType.ALL)

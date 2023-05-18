@@ -30,7 +30,7 @@ public class PhoneNumberMapper {
         PhoneNumberDTO dto = new PhoneNumberDTO();
         dto.setId(entity.getId());
         dto.setPhone(entity.getPhone());
-        dto.setSubscriberId(entity.getSubscriber() == null?
+        dto.setSubscriberId(entity.getSubscriber() == null ?
                 null : entity.getSubscriber().getId());
         dto.setExchangeId(entity.getExchange().getId());
         return dto;
@@ -41,7 +41,7 @@ public class PhoneNumberMapper {
         entity.setId(dto.getId());
         entity.setExchange(exchangeService.getTelephoneExchange(dto.getExchangeId()));
         entity.setPhone(dto.getPhone());
-//        entity.setSubscriber(subscriberService.getSubscriber(dto.getSubscriberId()));
+        entity.setSubscriber(dto.getSubscriberId() == null ? null : subscriberService.getSubscriber(dto.getSubscriberId()));
         entity.addPrefix();
         return entity;
     }
