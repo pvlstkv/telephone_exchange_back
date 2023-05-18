@@ -27,7 +27,9 @@ public class TelephoneExchangeMapper {
         dto.setId(entity.getId());
         dto.setNumber(entity.getNumber());
         dto.setDistrictId(entity.getDistrict().getId());
-        dto.setSubscriberIds(subscriberMapper.toDTOListIds(entity.getSubscribers()));
+        dto.setSubscriberIds(entity.getSubscribers() == null ?
+                null
+                :subscriberMapper.toDTOListIds(entity.getSubscribers()));
         dto.setFirstTwoDigits(entity.getFirstTwoDigits());
         return dto;
     }
@@ -41,7 +43,9 @@ public class TelephoneExchangeMapper {
                 )
         );
         entity.setFirstTwoDigits(dto.getFirstTwoDigits());
-        entity.setSubscribers(subscriberMapper.toEntityList(dto.getSubscriberIds()));
+        entity.setSubscribers(dto.getSubscriberIds() == null ?
+                null
+                :subscriberMapper.toEntityList(dto.getSubscriberIds()));
         return entity;
     }
 
@@ -55,6 +59,7 @@ public class TelephoneExchangeMapper {
 
     private TelephoneExchangeExtendedDTO toExtendedDTO(TelephoneExchange exchange) {
         TelephoneExchangeExtendedDTO dto = new TelephoneExchangeExtendedDTO();
+        dto.setId(exchange.getId());
         dto.setNumber(exchange.getNumber());
         dto.setFirstTwoDigits(exchange.getFirstTwoDigits());
         DistrictDTO districtDTO = new DistrictDTO();
